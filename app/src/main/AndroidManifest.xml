@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="no.kristiania.covid19app">
-    <!-- <uses-permission android:name="android.permission.WAKE_LOCK" /> -->
-    <!-- <uses-feature android:name="android.hardware.type.watch" /> -->
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -12,7 +11,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SingleCountryActivity"
+
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="false" />
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
+        <activity
+            android:name=".GlobalSummaryActivity"
+            android:label="@string/title_activity_global_summary"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SingleCountryActivity"
             android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -27,18 +49,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <uses-library
-            android:name="com.google.android.wearable"
-            android:required="false" />
-        <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
-        -->
-        <meta-data
-            android:name="com.google.android.wearable.standalone"
-            android:value="true" />
-
         <activity
             android:name=".SplashScreen"
             android:label="@string/title_activity_splash_screen"

@@ -5,7 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.country_details.view.*
+import kotlinx.android.synthetic.main.country_details.view.textView_new_confirmed
+import kotlinx.android.synthetic.main.country_details.view.textView_total_confirmed
 
 class SingleCountryAdapter(
     private val countryDetails: Array<CountryDetails>,
@@ -17,7 +20,6 @@ class SingleCountryAdapter(
     override fun getItemCount(): Int {
         return 1
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomSingleViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -34,6 +36,10 @@ class SingleCountryAdapter(
         val countryDetail = countryDetails[latest -1]
 
         holder.singleView.textView_single_country.text = countryDetail.country
+
+        val flagImageUrl = "https://www.countryflags.io/${countryDetail.countryCode}/shiny/64.png"
+        val flagThumbnail = holder.singleView.imageView_flag
+        Picasso.get().load(flagImageUrl).into(flagThumbnail)
 
         holder.singleView.textView_total_confirmed.text = countryDetail.confirmed.toString()
         holder.singleView.textView_total_recovered.text = countryDetail.recovered.toString()

@@ -1,26 +1,28 @@
 package no.kristiania.covid19app
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_global_summary.*
 import kotlinx.android.synthetic.main.activity_summary.*
 import okhttp3.*
 import java.io.IOException
 
-class SummaryActivity : AppCompatActivity() {
+class GlobalSummaryActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_summary)
+        setContentView(R.layout.activity_global_summary)
 
-        recyclerView_summary.layoutManager = LinearLayoutManager(this)
+        recyclerView_global_stats.layoutManager = LinearLayoutManager(this)
 
-        supportActionBar?.title = "COVID-19 Global Stats App"
+        supportActionBar?.title = "Global summary"
 
-        fetchSummary()
+        fetchGlobal()
     }
-
-    private fun fetchSummary() {
+    private fun fetchGlobal() {
         val url = "https://api.covid19api.com/summary"
         val request = Request.Builder().url(url).build()
 
@@ -29,17 +31,16 @@ class SummaryActivity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 val body = response.body!!.string()
 
-                val summary = Gson().fromJson(
+                val globalSummary = Gson().fromJson(
                     body,
                     Summary::class.java
                 )
-                // sorts by highest number of confirmed cases, descending
-                val sortedSummary = summary.countries.sortedByDescending { it.totalConfirmed }
+                println(globalSummary)
 
                 runOnUiThread {
-                    recyclerView_summary.adapter =
-                        SummaryAdapter(
-                            sortedSummary
+                    recyclerView_global_stats.adapter =
+                        GlobalSummaryAdapter(
+                            globalSummary
                         )
                 }
 

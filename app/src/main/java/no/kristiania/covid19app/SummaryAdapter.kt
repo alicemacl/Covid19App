@@ -1,11 +1,13 @@
 package no.kristiania.covid19app
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_summary.view.*
 import kotlinx.android.synthetic.main.country_row.view.*
 
 class SummaryAdapter(private val summary: List<Countries>) : RecyclerView.Adapter<CustomViewHolder>() {
@@ -20,6 +22,7 @@ class SummaryAdapter(private val summary: List<Countries>) : RecyclerView.Adapte
         return CustomViewHolder(singleCountryCell)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val country = summary[position]
 
@@ -27,8 +30,7 @@ class SummaryAdapter(private val summary: List<Countries>) : RecyclerView.Adapte
         holder.view.textView_total_confirmed.text = country.totalConfirmed.toString()
         holder.view.textView_new_confirmed.text = "+" + country.newConfirmed.toString()
 
-        val smallThumb = 32
-        val flagImageUrl = "https://www.countryflags.io/${country.countryCode}/shiny/$smallThumb.png"
+        val flagImageUrl = "https://www.countryflags.io/${country.countryCode}/shiny/32.png"
         val flagThumbnail = holder.view.imageView_country_flag
         Picasso.get().load(flagImageUrl).into(flagThumbnail)
 
